@@ -12,7 +12,7 @@ public class DisplayInfoDto {
 	private List<DisplayInfos> product;
 	private List<ProductImage> productImages;
 	private List<DisplayInfoImage> displayInfoImages;
-	private double avgScore;
+	private int avgScore;
 	private List<ProductPrice> productPrices;
 	
 	public DisplayInfoDto() {
@@ -20,7 +20,7 @@ public class DisplayInfoDto {
 	}
 	
 	public DisplayInfoDto(List<DisplayInfos> product, List<ProductImage> productImages,
-			List<DisplayInfoImage> displayInfoImages, double avgScore, List<ProductPrice> productPrices) {
+			List<DisplayInfoImage> displayInfoImages, int avgScore, List<ProductPrice> productPrices) {
 		super();
 		this.product = product;
 		this.productImages = productImages;
@@ -41,7 +41,7 @@ public class DisplayInfoDto {
 		return displayInfoImages;
 	}
 	
-	public double getAvgScore() {
+	public int getAvgScore() {
 		return avgScore;
 	}
 	
