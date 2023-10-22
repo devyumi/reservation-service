@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.connect.reservation.dto.CategoryDto;
 import kr.or.connect.reservation.dto.CommentDto;
+import kr.or.connect.reservation.dto.DisplayInfosDto;
 import kr.or.connect.reservation.dto.DisplayInfoDto;
-import kr.or.connect.reservation.dto.DisplayInfoIdDto;
 import kr.or.connect.reservation.dto.PromotionDto;
 import kr.or.connect.reservation.service.ReservationService;
 
@@ -27,7 +27,7 @@ public class ReservationController {
 	}
 	
 	@GetMapping("displayinfos")
-	public DisplayInfoDto findDisplayInfos(@RequestParam(name = "categoryId", required = false, defaultValue = "0") int categoryId,
+	public DisplayInfosDto findDisplayInfos(@RequestParam(name = "categoryId", required = false, defaultValue = "0") int categoryId,
 											@RequestParam(name = "start", required = false, defaultValue = "0") int start) {
 		return reservationService.findDisplayInfos(categoryId, start);
 	}
@@ -38,8 +38,8 @@ public class ReservationController {
 	}
 	
 	@GetMapping("displayinfos/{displayId}")
-	public DisplayInfoIdDto findDisplayInfoIds(@PathVariable(name = "displayId") int displayInfoId) {
-		return reservationService.findDisplayInfoIds(displayInfoId);
+	public DisplayInfoDto findDisplayInfo(@PathVariable(name = "displayId") int displayInfoId) {
+		return reservationService.findDisplayInfo(displayInfoId);
 	}
 	
 	@GetMapping("comments")

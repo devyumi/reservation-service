@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 import kr.or.connect.reservation.dao.ReservationDao;
 import kr.or.connect.reservation.domain.Category;
 import kr.or.connect.reservation.domain.Comment;
-import kr.or.connect.reservation.domain.DisplayInfo;
+import kr.or.connect.reservation.domain.DisplayInfos;
 import kr.or.connect.reservation.domain.DisplayInfoImage;
 import kr.or.connect.reservation.domain.ProductImage;
 import kr.or.connect.reservation.domain.ProductPrice;
 import kr.or.connect.reservation.domain.Promotion;
 import kr.or.connect.reservation.dto.CategoryDto;
 import kr.or.connect.reservation.dto.CommentDto;
+import kr.or.connect.reservation.dto.DisplayInfosDto;
 import kr.or.connect.reservation.dto.DisplayInfoDto;
-import kr.or.connect.reservation.dto.DisplayInfoIdDto;
 import kr.or.connect.reservation.dto.PromotionDto;
 import kr.or.connect.reservation.service.ReservationService;
 
@@ -33,10 +33,10 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public DisplayInfoDto findDisplayInfos(int categoryId, int start) {
-		List<DisplayInfo> displayInfos = reservationDao.selectDisplayInfos(categoryId, start, ReservationService.DISPLAY_INFO_LIMIT);
+	public DisplayInfosDto findDisplayInfos(int categoryId, int start) {
+		List<DisplayInfos> displayInfos = reservationDao.selectDisplayInfos(categoryId, start, ReservationService.DISPLAY_INFO_LIMIT);
 		int displayInfoCount = reservationDao.selectDisplayInfoCount(categoryId);
-		return new DisplayInfoDto(displayInfoCount, displayInfos.size(), displayInfos);
+		return new DisplayInfosDto(displayInfoCount, displayInfos.size(), displayInfos);
 	}
 
 	@Override
@@ -46,13 +46,13 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 	
 	@Override
-	public DisplayInfoIdDto findDisplayInfoIds(int displayInfoId) {
-		List<DisplayInfo> displayInfos = reservationDao.selectDisplayInfoIds(displayInfoId);
+	public DisplayInfoDto findDisplayInfo(int displayInfoId) {
+		List<DisplayInfos> displayInfos = reservationDao.selectDisplayInfo(displayInfoId);
 		List<ProductImage> productimages = reservationDao.selectProductImages(displayInfoId);
 		List<DisplayInfoImage> displayInfoImages = reservationDao.selectDisplayInfoImages(displayInfoId);
 		List<ProductPrice> productPrices = reservationDao.selectProductPrices(displayInfoId);
 		int scoreAvg = reservationDao.selectScoreAvg(displayInfoId);
-		return new DisplayInfoIdDto(displayInfos, productimages, displayInfoImages, scoreAvg, productPrices);
+		return new DisplayInfoDto(displayInfos, productimages, displayInfoImages, scoreAvg, productPrices);
 	}
 	
 	@Override

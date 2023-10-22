@@ -2,39 +2,57 @@ package kr.or.connect.reservation.dto;
 
 import java.util.List;
 
-import kr.or.connect.reservation.domain.DisplayInfo;
+import kr.or.connect.reservation.domain.DisplayInfos;
+import kr.or.connect.reservation.domain.DisplayInfoImage;
+import kr.or.connect.reservation.domain.ProductImage;
+import kr.or.connect.reservation.domain.ProductPrice;
 
 public class DisplayInfoDto {
-	private int totalCount;
-	private int productCount;
-	private List<DisplayInfo> products;
+
+	private List<DisplayInfos> product;
+	private List<ProductImage> productImages;
+	private List<DisplayInfoImage> displayInfoImages;
+	private double avgScore;
+	private List<ProductPrice> productPrices;
 	
 	public DisplayInfoDto() {
 		
 	}
 	
-	public DisplayInfoDto(int totalCount, int productCount, List<DisplayInfo> products) {
+	public DisplayInfoDto(List<DisplayInfos> product, List<ProductImage> productImages,
+			List<DisplayInfoImage> displayInfoImages, double avgScore, List<ProductPrice> productPrices) {
 		super();
-		this.totalCount = totalCount;
-		this.productCount = productCount;
-		this.products = products;
+		this.product = product;
+		this.productImages = productImages;
+		this.displayInfoImages = displayInfoImages;
+		this.avgScore = avgScore;
+		this.productPrices = productPrices;
 	}
 
-	public int getTotalCount() {
-		return totalCount;
+	public List<DisplayInfos> getProduct() {
+		return product;
 	}
-
-	public int getProductCount() {
-		return productCount;
+	
+	public List<ProductImage> getProductImages() {
+		return productImages;
 	}
-
-	public List<DisplayInfo> getProducts() {
-		return products;
+	
+	public List<DisplayInfoImage> getDisplayInfoImages() {
+		return displayInfoImages;
 	}
-
+	
+	public double getAvgScore() {
+		return avgScore;
+	}
+	
+	public List<ProductPrice> getProductPrices() {
+		return productPrices;
+	}
+	
 	@Override
 	public String toString() {
-		return "DisplayInfoDto [totalCount=" + totalCount + ", productCount=" + productCount + ", products=" + products
-				+ "]";
+		return "DisplayInfoDto [product=" + product + ", productImages=" + productImages
+				+ ", displayInfoImages=" + displayInfoImages + ", avgScore=" + avgScore + ", productPrices="
+				+ productPrices + "]";
 	}
 }

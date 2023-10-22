@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
-import javax.swing.ListModel;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,18 +16,17 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.connect.reservation.domain.Category;
 import kr.or.connect.reservation.domain.Comment;
-import kr.or.connect.reservation.domain.DisplayInfo;
+import kr.or.connect.reservation.domain.DisplayInfos;
 import kr.or.connect.reservation.domain.DisplayInfoImage;
 import kr.or.connect.reservation.domain.ProductImage;
 import kr.or.connect.reservation.domain.ProductPrice;
 import kr.or.connect.reservation.domain.Promotion;
-import kr.or.connect.reservation.dto.DisplayInfoIdDto;
 
 @Repository
 public class ReservationDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private RowMapper<Category> categoryMapper = BeanPropertyRowMapper.newInstance(Category.class); //resultSet
-	private RowMapper<DisplayInfo> displayInfoMapper = BeanPropertyRowMapper.newInstance(DisplayInfo.class);
+	private RowMapper<DisplayInfos> displayInfoMapper = BeanPropertyRowMapper.newInstance(DisplayInfos.class);
 	private RowMapper<Promotion> promotionMapper = BeanPropertyRowMapper.newInstance(Promotion.class);
 	private RowMapper<ProductImage> productImageMapper = BeanPropertyRowMapper.newInstance(ProductImage.class);
 	private RowMapper<DisplayInfoImage> displayInfoImageMapper = BeanPropertyRowMapper.newInstance(DisplayInfoImage.class);
@@ -43,12 +41,12 @@ public class ReservationDao {
 		return jdbc.query(SELECT_CATEGORY, categoryMapper);
 	}
 	
-	public List<DisplayInfo> selectDisplayInfos(int categoryId, int start, int limit){
+	public List<DisplayInfos> selectDisplayInfos(int categoryId, int start, int limit){
 		Map<String, Integer> params = new HashMap<>();
 		params.put("category_id", categoryId);
 		params.put("start", start);
 		params.put("limit", limit);
-		return jdbc.query(SELECT_DISPLAY_INFO, params, displayInfoMapper);
+		return jdbc.query(SELECT_DISPLAY_INFOS, params, displayInfoMapper);
 	}
 	
 	public int selectDisplayInfoCount(int categoryId) {
@@ -60,10 +58,10 @@ public class ReservationDao {
 		return jdbc.query(SELECT_PROMOTION, promotionMapper);
 	}
 	
-	public List<DisplayInfo> selectDisplayInfoIds(int displayInfoId){
+	public List<DisplayInfos> selectDisplayInfo(int displayInfoId){
 		Map<String, Integer> params = new HashMap<>();
 		params.put("display_info_id", displayInfoId);
-		return jdbc.query(SELECT_DISPLAY_INFO_ID, params, displayInfoMapper);
+		return jdbc.query(SELECT_DISPLAY_INFO, params, displayInfoMapper);
 	}
 	
 	public List<ProductImage> selectProductImages(int displayInfoId){

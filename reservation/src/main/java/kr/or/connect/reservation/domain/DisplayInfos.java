@@ -1,6 +1,6 @@
 package kr.or.connect.reservation.domain;
 
-public class DisplayInfo {
+public class DisplayInfos {
 	private int id;
 	private int categoryId;
 	private int displayInfoId;
@@ -19,7 +19,7 @@ public class DisplayInfo {
 	private String modifyDate;
 	private int fileId;
 	
-	public DisplayInfo() {
+	public DisplayInfos() {
 		
 	}
 
