@@ -27,26 +27,26 @@ public class ReservationServiceImpl implements ReservationService{
 	ReservationDao reservationDao;
 
 	@Override
-	public CategoryDto findCategory() {
+	public CategoryDto findCategories() {
 		List<Category> categories = reservationDao.selectCategories();
 		return new CategoryDto(categories.size(), categories);
 	}
 
 	@Override
-	public DisplayInfoDto findDisplayInfo(int categoryId, int start) {
+	public DisplayInfoDto findDisplayInfos(int categoryId, int start) {
 		List<DisplayInfo> displayInfos = reservationDao.selectDisplayInfos(categoryId, start, ReservationService.DISPLAY_INFO_LIMIT);
 		int displayInfoCount = reservationDao.selectDisplayInfoCount(categoryId);
 		return new DisplayInfoDto(displayInfoCount, displayInfos.size(), displayInfos);
 	}
 
 	@Override
-	public PromotionDto findPromotion() {
+	public PromotionDto findPromotions() {
 		List<Promotion> promotions = reservationDao.selectPromotions();
 		return new PromotionDto(promotions.size(), promotions);
 	}
 	
 	@Override
-	public DisplayInfoIdDto findDisplayInfoId(int displayInfoId) {
+	public DisplayInfoIdDto findDisplayInfoIds(int displayInfoId) {
 		List<DisplayInfo> displayInfos = reservationDao.selectDisplayInfoIds(displayInfoId);
 		List<ProductImage> productimages = reservationDao.selectProductImages(displayInfoId);
 		List<DisplayInfoImage> displayInfoImages = reservationDao.selectDisplayInfoImages(displayInfoId);
@@ -56,7 +56,7 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 	
 	@Override
-	public CommentDto findComment(int productId, int start) {
+	public CommentDto findComments(int productId, int start) {
 		List<Comment> comments = reservationDao.selectComments(productId, start, ReservationService.COMMENT_LIMIT);
 		int commentCount = reservationDao.selectCommentCount(productId);
 		return new CommentDto(commentCount, comments.size(), comments);
