@@ -9,10 +9,14 @@ import kr.or.connect.reservation.dao.ReservationDao;
 import kr.or.connect.reservation.domain.Category;
 import kr.or.connect.reservation.domain.Comment;
 import kr.or.connect.reservation.domain.DisplayInfo;
+import kr.or.connect.reservation.domain.DisplayInfoImage;
+import kr.or.connect.reservation.domain.ProductImage;
+import kr.or.connect.reservation.domain.ProductPrice;
 import kr.or.connect.reservation.domain.Promotion;
 import kr.or.connect.reservation.dto.CategoryDto;
 import kr.or.connect.reservation.dto.CommentDto;
 import kr.or.connect.reservation.dto.DisplayInfoDto;
+import kr.or.connect.reservation.dto.DisplayInfoIdDto;
 import kr.or.connect.reservation.dto.PromotionDto;
 import kr.or.connect.reservation.service.ReservationService;
 
@@ -40,7 +44,17 @@ public class ReservationServiceImpl implements ReservationService{
 		List<Promotion> promotions = reservationDao.selectPromotions();
 		return new PromotionDto(promotions.size(), promotions);
 	}
-
+	
+	@Override
+	public DisplayInfoIdDto findDisplayInfoId(int displayInfoId) {
+		List<DisplayInfo> displayInfos = reservationDao.selectDisplayInfoIds(displayInfoId);
+		List<ProductImage> productimages = reservationDao.selectProductImages(displayInfoId);
+		List<DisplayInfoImage> displayInfoImages = reservationDao.selectDisplayInfoImages(displayInfoId);
+		List<ProductPrice> productPrices = reservationDao.selectProductPrices(displayInfoId);
+		int scoreAvg = reservationDao.selectScoreAvg(displayInfoId);
+		return new DisplayInfoIdDto(displayInfos, productimages, displayInfoImages, scoreAvg, productPrices);
+	}
+	
 	@Override
 	public CommentDto findComment(int productId, int start) {
 		List<Comment> comments = reservationDao.selectComments(productId, start, ReservationService.COMMENT_LIMIT);
