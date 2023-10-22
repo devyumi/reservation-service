@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import io.swagger.annotations.Contact;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -38,7 +38,8 @@ public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
 	}
 	
 	private ApiInfo apiInfo() {
-		ApiInfo apiInfo = new ApiInfo("Reservation-service", "", "", "", "", "", "");
-		return apiInfo;
+		return new ApiInfoBuilder()
+				.title("Reservation API")
+				.build();
 	}
 }
