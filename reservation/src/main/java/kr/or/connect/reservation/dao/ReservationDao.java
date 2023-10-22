@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.connect.reservation.domain.Category;
+import kr.or.connect.reservation.domain.Comment;
 import kr.or.connect.reservation.domain.DisplayInfo;
 import kr.or.connect.reservation.domain.Promotion;
 
@@ -24,6 +25,7 @@ public class ReservationDao {
 	private RowMapper<Category> categoryMapper = BeanPropertyRowMapper.newInstance(Category.class); //resultSet
 	private RowMapper<DisplayInfo> displayInfoMapper = BeanPropertyRowMapper.newInstance(DisplayInfo.class);
 	private RowMapper<Promotion> promotionMapper = BeanPropertyRowMapper.newInstance(Promotion.class);
+	private RowMapper<Comment> commentMapper = BeanPropertyRowMapper.newInstance(Comment.class);
 	
 	public ReservationDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -48,5 +50,18 @@ public class ReservationDao {
 	
 	public List<Promotion> selectPromotions(){
 		return jdbc.query(SELECT_PROMOTION, promotionMapper);
+	}
+	
+	public List<Comment> selectComments(int productId, int start, int limit){
+		Map<String, Integer> params = new HashMap<>();
+		params.put("product_id", productId);
+		params.put("start", start);
+		params.put("limit", limit);
+		return jdbc.query(SELECT_COMMENT, params, commentMapper);
+	}
+	
+	public int selectCommentCount(int productId) {
+		Map<String, Integer> params = Collections.singletonMap("product_id", productId);
+		return jdbc.queryForObject(SELECT_COMMENT_COUNT, params, Integer.class);		
 	}
 }
