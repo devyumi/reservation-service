@@ -44,6 +44,7 @@ public class ReservationDaoSqls {
 			+ "ON product.category_id = category.id "
 			+ "INNER JOIN product_image "
 			+ "ON product.id = product_image.product_id "
+			+ "WHERE type = 'ma' "
 			+ "GROUP BY product.id "
 			+ "HAVING display_info.id = :display_info_id";
 	
@@ -55,7 +56,7 @@ public class ReservationDaoSqls {
 			+ "ON product_image.product_id = product.id "
 			+ "INNER JOIN display_info "
 			+ "ON product.id = display_info.product_id "
-			+ "WHERE display_info.id = :display_info_id";
+			+ "WHERE type = 'ma' AND display_info.id = :display_info_id";
 	
 	public static final String SELECT_DISPLAY_INFO_IMAGE = "SELECT display_info_image.id, display_info_id as displayInfoId, file_info.id as fileId, file_name as fileName, save_file_name as saveFileName, content_type as contentType, delete_flag as deleteFlag, create_date as createDate, modify_date as modifyDate "
 			+ "FROM display_info_image "
