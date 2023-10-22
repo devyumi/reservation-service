@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import kr.or.connect.reservation.dao.ReservationDao;
 import kr.or.connect.reservation.domain.Category;
 import kr.or.connect.reservation.domain.DisplayInfo;
+import kr.or.connect.reservation.domain.Promotion;
 import kr.or.connect.reservation.dto.CategoryDto;
 import kr.or.connect.reservation.dto.DisplayInfoDto;
+import kr.or.connect.reservation.dto.PromotionDto;
 import kr.or.connect.reservation.service.ReservationService;
 
 @Service
@@ -29,5 +31,11 @@ public class ReservationServiceImpl implements ReservationService{
 		List<DisplayInfo> displayInfos = reservationDao.selectDisplayInfos(categoryId, start, ReservationService.LIMIT);
 		int displayInfoCount = reservationDao.selectDisplayInfoCount(categoryId);
 		return new DisplayInfoDto(displayInfoCount, displayInfos.size(), displayInfos);
+	}
+
+	@Override
+	public PromotionDto findPromotion() {
+		List<Promotion> promotions = reservationDao.selectPromotions();
+		return new PromotionDto(promotions.size(), promotions);
 	}
 }

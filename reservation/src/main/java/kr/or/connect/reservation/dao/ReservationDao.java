@@ -16,12 +16,14 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.connect.reservation.domain.Category;
 import kr.or.connect.reservation.domain.DisplayInfo;
+import kr.or.connect.reservation.domain.Promotion;
 
 @Repository
 public class ReservationDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private RowMapper<Category> categoryMapper = BeanPropertyRowMapper.newInstance(Category.class); //resultSet
 	private RowMapper<DisplayInfo> displayInfoMapper = BeanPropertyRowMapper.newInstance(DisplayInfo.class);
+	private RowMapper<Promotion> promotionMapper = BeanPropertyRowMapper.newInstance(Promotion.class);
 	
 	public ReservationDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -42,5 +44,9 @@ public class ReservationDao {
 	public int selectDisplayInfoCount(int categoryId) {
 		Map<String, Integer> params = Collections.singletonMap("category_id", categoryId);
 		return jdbc.queryForObject(SELECT_DISPLAY_INFO_COUNT, params, Integer.class);		
+	}
+	
+	public List<Promotion> selectPromotions(){
+		return jdbc.query(SELECT_PROMOTION, promotionMapper);
 	}
 }

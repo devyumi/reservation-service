@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.connect.reservation.dto.CategoryDto;
 import kr.or.connect.reservation.dto.DisplayInfoDto;
+import kr.or.connect.reservation.dto.PromotionDto;
 import kr.or.connect.reservation.service.ReservationService;
 
 @RestController
@@ -24,5 +25,10 @@ public class ReservationController {
 	public DisplayInfoDto findDisplayInfos(@RequestParam(name = "categoryId", required = false, defaultValue = "0") int categoryId,
 			@RequestParam(name = "start", required = false, defaultValue = "0") int start) {
 		return reservationService.findDisplayInfo(categoryId, start);
+	}
+	
+	@GetMapping("api/promotions")
+	public PromotionDto findPromotions() {
+		return reservationService.findPromotion();
 	}
 }
