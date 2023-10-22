@@ -5,7 +5,7 @@ import kr.or.connect.reservation.dto.DisplayInfoDto;
 import kr.or.connect.reservation.dto.PromotionDto;
 
 public interface ReservationService {
-	static final Integer LIMIT = 4;
+	static final Integer DISPLAY_INFO_LIMIT = 4;
 	CategoryDto findCategory();
 	DisplayInfoDto findDisplayInfo(int categoryId, int start);
 	PromotionDto findPromotion();

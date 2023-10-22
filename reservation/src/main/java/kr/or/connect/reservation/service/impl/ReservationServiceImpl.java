@@ -28,7 +28,7 @@ public class ReservationServiceImpl implements ReservationService{
 
 	@Override
 	public DisplayInfoDto findDisplayInfo(int categoryId, int start) {
-		List<DisplayInfo> displayInfos = reservationDao.selectDisplayInfos(categoryId, start, ReservationService.LIMIT);
+		List<DisplayInfo> displayInfos = reservationDao.selectDisplayInfos(categoryId, start, ReservationService.DISPLAY_INFO_LIMIT);
 		int displayInfoCount = reservationDao.selectDisplayInfoCount(categoryId);
 		return new DisplayInfoDto(displayInfoCount, displayInfos.size(), displayInfos);
 	}
