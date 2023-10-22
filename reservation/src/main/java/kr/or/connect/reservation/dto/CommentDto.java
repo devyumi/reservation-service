@@ -23,27 +23,15 @@ public class CommentDto {
 	public int getTotalCount() {
 		return totalCount;
 	}
-	
-	public void setTotalCount(int totalCount) {
-		this.totalCount = totalCount;
-	}
-	
+
 	public int getCommentCount() {
 		return commentCount;
 	}
-	
-	public void setCommentCount(int commentCount) {
-		this.commentCount = commentCount;
-	}
-	
+
 	public List<Comment> getReservationUserComments() {
 		return reservationUserComments;
 	}
-	
-	public void setReservationUserComments(List<Comment> reservationUserComments) {
-		this.reservationUserComments = reservationUserComments;
-	}
-	
+
 	@Override
 	public String toString() {
 		return "CommentDto [totalCount=" + totalCount + ", commentCount=" + commentCount + ", reservationUserComments="

@@ -21,16 +21,8 @@ public class CategoryDto {
 		return size;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
-	}
-
 	public List<Category> getItems() {
 		return items;
-	}
-
-	public void setItems(List<Category> items) {
-		this.items = items;
 	}
 
 	@Override

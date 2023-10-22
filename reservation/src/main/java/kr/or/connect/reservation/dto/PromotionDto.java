@@ -22,16 +22,8 @@ public class PromotionDto {
 		return size;
 	}
 	
-	public void setSize(int size) {
-		this.size = size;
-	}
-	
 	public List<Promotion> getItems() {
 		return items;
-	}
-	
-	public void setItems(List<Promotion> items) {
-		this.items = items;
 	}
 	
 	@Override

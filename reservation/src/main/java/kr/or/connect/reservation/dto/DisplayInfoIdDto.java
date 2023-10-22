@@ -33,40 +33,20 @@ public class DisplayInfoIdDto {
 		return product;
 	}
 	
-	public void setProduct(List<DisplayInfo> product) {
-		this.product = product;
-	}
-	
 	public List<ProductImage> getProductImages() {
 		return productImages;
-	}
-	
-	public void setProductImages(List<ProductImage> productImages) {
-		this.productImages = productImages;
 	}
 	
 	public List<DisplayInfoImage> getDisplayInfoImages() {
 		return displayInfoImages;
 	}
 	
-	public void setDisplayInfoImages(List<DisplayInfoImage> displayInfoImages) {
-		this.displayInfoImages = displayInfoImages;
-	}
-	
 	public double getAvgScore() {
 		return avgScore;
 	}
 	
-	public void setAvgScore(double avgScore) {
-		this.avgScore = avgScore;
-	}
-	
 	public List<ProductPrice> getProductPrices() {
 		return productPrices;
-	}
-	
-	public void setProductPrices(List<ProductPrice> productPrices) {
-		this.productPrices = productPrices;
 	}
 	
 	@Override

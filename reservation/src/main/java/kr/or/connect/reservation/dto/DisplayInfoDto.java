@@ -23,25 +23,13 @@ public class DisplayInfoDto {
 	public int getTotalCount() {
 		return totalCount;
 	}
-	
-	public void setTotalCount(int totalCount) {
-		this.totalCount = totalCount;
-	}
-	
+
 	public int getProductCount() {
 		return productCount;
 	}
-	
-	public void setProductCount(int productCount) {
-		this.productCount = productCount;
-	}
-	
+
 	public List<DisplayInfo> getProducts() {
 		return products;
-	}
-	
-	public void setProducts(List<DisplayInfo> products) {
-		this.products = products;
 	}
 
 	@Override
