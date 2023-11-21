@@ -16,7 +16,7 @@ import kr.or.connect.reservation.service.ReservationService;
 
 @RestController
 @RequestMapping("api/v1")
-public class ReservationController {
+public class ApiController {
 
 	@Autowired
 	ReservationService reservationService;
