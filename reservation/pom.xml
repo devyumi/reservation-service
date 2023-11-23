@@ -105,6 +105,13 @@
 		<version>${jackson2.version}</version>
 	</dependency>
 	
+	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
+	<dependency>
+	    <groupId>com.fasterxml.jackson.datatype</groupId>
+	    <artifactId>jackson-datatype-jsr310</artifactId>
+	    <version>${jackson2.version}</version>
+	</dependency>
+
 	<dependency>
     	<groupId>com.jayway.jsonpath</groupId>
     	<artifactId>json-path</artifactId>
