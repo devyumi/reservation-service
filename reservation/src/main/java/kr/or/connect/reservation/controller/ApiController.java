@@ -3,6 +3,8 @@ package kr.or.connect.reservation.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +14,8 @@ import kr.or.connect.reservation.dto.CommentDto;
 import kr.or.connect.reservation.dto.DisplayInfosDto;
 import kr.or.connect.reservation.dto.DisplayInfoDto;
 import kr.or.connect.reservation.dto.PromotionDto;
+import kr.or.connect.reservation.dto.ReservationRequestDto;
+import kr.or.connect.reservation.dto.ReservationResponseDto;
 import kr.or.connect.reservation.service.ReservationService;
 
 @RestController
@@ -46,5 +50,10 @@ public class ApiController {
 	public CommentDto findComments(@RequestParam(name = "productId", required = false, defaultValue = "0") int productId,
 									@RequestParam(name = "start", required = false, defaultValue = "0") int start) {
 		return reservationService.findComments(productId, start);
+	}
+	
+	@PostMapping("reservationinfos")
+	public ReservationResponseDto RegisterReservations(@RequestBody ReservationRequestDto reservationRequest) {
+		return reservationService.RegisterReservation(reservationRequest);
 	}
 }
