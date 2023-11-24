@@ -1,10 +1,14 @@
 package kr.or.connect.reservation.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,5 +71,21 @@ public class ApiController {
 	public OrderInfosDto findOrderInfos(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
 		int userId = userService.getUserId(customUserDetails.getUsername());
 		return reservationService.findOrderInfos(userId);
+	}
+	
+	@PutMapping("reservationinfos")
+	public Map<String, String> cancelReservation(@RequestBody Map<String, Integer> params,
+			@AuthenticationPrincipal CustomUserDetails customUserDetails){
+		int reservationId = params.get("id");
+		int userId = userService.getUserId(customUserDetails.getUsername());
+		int cancelFlag = reservationService.updateReservation(reservationId, userId);
+		Map<String, String> result = new HashMap<String, String>();
+		
+		if(cancelFlag == 1) {
+			result.put("result", "success");
+		}else {
+			result.put("result", "fail");
+		}
+		return result;
 	}
 }

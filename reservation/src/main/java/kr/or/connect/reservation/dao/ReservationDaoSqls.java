@@ -12,4 +12,8 @@ public class ReservationDaoSqls {
 			+ "WHERE r.user_id = :user_id "
 			+ "GROUP BY r.id "
 			+ "ORDER BY r.id DESC";
+	
+	public static final String UPDATE_CANCEL_FLAG = "UPDATE reservation_info "
+			+ "SET cancel_flag = 1 "
+			+ "WhERE id = :reservation_id AND user_id = :user_id";
 }

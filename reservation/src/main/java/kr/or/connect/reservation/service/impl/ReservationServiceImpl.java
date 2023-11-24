@@ -144,4 +144,9 @@ public class ReservationServiceImpl implements ReservationService{
 		List<OrderInfos> orderInfos = reservationDao.selectOrderInfos(userId);
 		return new OrderInfosDto(orderInfos.size(), orderInfos);
 	}
+
+	@Override
+	public int updateReservation(int reservationId, int userId) {
+		return reservationDao.updateCancelFlag(reservationId, userId);
+	}
 }

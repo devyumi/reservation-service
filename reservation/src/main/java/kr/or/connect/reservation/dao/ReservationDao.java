@@ -3,6 +3,7 @@ package kr.or.connect.reservation.dao;
 import static kr.or.connect.reservation.dao.ReservationDaoSqls.*;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,5 +47,12 @@ public class ReservationDao {
 	public List<OrderInfos> selectOrderInfos(int userId) {
 		Map<String, Integer> params = Collections.singletonMap("user_id", userId);
 		return jdbc.query(SELECT_ORDER_INFOS, params, orderInfosMapper);
+	}
+	
+	public int updateCancelFlag(int reservationId, int userId) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("reservation_id", reservationId);
+		params.put("user_id", userId);
+		return jdbc.update(UPDATE_CANCEL_FLAG, params);
 	}
 }

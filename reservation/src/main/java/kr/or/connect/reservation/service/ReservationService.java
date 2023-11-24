@@ -24,4 +24,5 @@ public interface ReservationService {
 	ReservationInfoDB addReservationInfoDB(ReservationRequestDto reservationRequest);
 	ReservationInfoPriceDB addReservationInfoPriceDB(int reservationInfoId, ReservationPriceRequest reservationPriceRequest);
 	OrderInfosDto findOrderInfos(int userId);
+	int updateReservation(int reservationId, int userId);
 }
