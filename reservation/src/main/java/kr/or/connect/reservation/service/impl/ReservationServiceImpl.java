@@ -17,6 +17,7 @@ import kr.or.connect.reservation.dao.ReservationDao;
 import kr.or.connect.reservation.domain.Category;
 import kr.or.connect.reservation.domain.Comment;
 import kr.or.connect.reservation.domain.DisplayInfos;
+import kr.or.connect.reservation.domain.OrderInfos;
 import kr.or.connect.reservation.domain.DisplayInfoImage;
 import kr.or.connect.reservation.domain.ProductImage;
 import kr.or.connect.reservation.domain.ProductPrice;
@@ -28,6 +29,7 @@ import kr.or.connect.reservation.domain.ReservationPriceResponse;
 import kr.or.connect.reservation.dto.CategoryDto;
 import kr.or.connect.reservation.dto.CommentDto;
 import kr.or.connect.reservation.dto.DisplayInfosDto;
+import kr.or.connect.reservation.dto.OrderInfosDto;
 import kr.or.connect.reservation.dto.DisplayInfoDto;
 import kr.or.connect.reservation.dto.PromotionDto;
 import kr.or.connect.reservation.dto.ReservationRequestDto;
@@ -135,5 +137,11 @@ public class ReservationServiceImpl implements ReservationService{
 				reservationInfoId,
 				reservationPriceRequest.getProductPriceId(),
 				reservationPriceRequest.getCount());
+	}
+
+	@Override
+	public OrderInfosDto findOrderInfos(int userId) {
+		List<OrderInfos> orderInfos = reservationDao.selectOrderInfos(userId);
+		return new OrderInfosDto(orderInfos.size(), orderInfos);
 	}
 }

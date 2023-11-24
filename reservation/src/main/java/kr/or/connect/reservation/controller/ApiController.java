@@ -1,6 +1,7 @@
 package kr.or.connect.reservation.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,11 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.or.connect.reservation.dto.CategoryDto;
 import kr.or.connect.reservation.dto.CommentDto;
 import kr.or.connect.reservation.dto.DisplayInfosDto;
+import kr.or.connect.reservation.dto.OrderInfosDto;
 import kr.or.connect.reservation.dto.DisplayInfoDto;
 import kr.or.connect.reservation.dto.PromotionDto;
 import kr.or.connect.reservation.dto.ReservationRequestDto;
 import kr.or.connect.reservation.dto.ReservationResponseDto;
 import kr.or.connect.reservation.service.ReservationService;
+import kr.or.connect.reservation.service.UserService;
+import kr.or.connect.reservation.service.security.CustomUserDetails;
 
 @RestController
 @RequestMapping("api/v1")
@@ -24,6 +28,8 @@ public class ApiController {
 
 	@Autowired
 	ReservationService reservationService;
+	@Autowired
+	UserService userService;
 	
 	@GetMapping("categories")
 	public CategoryDto findCategories() {
@@ -55,5 +61,11 @@ public class ApiController {
 	@PostMapping("reservationinfos")
 	public ReservationResponseDto RegisterReservations(@RequestBody ReservationRequestDto reservationRequest) {
 		return reservationService.RegisterReservation(reservationRequest);
+	}
+	
+	@GetMapping("reservationinfos")
+	public OrderInfosDto findOrderInfos(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+		int userId = userService.getUserId(customUserDetails.getUsername());
+		return reservationService.findOrderInfos(userId);
 	}
 }

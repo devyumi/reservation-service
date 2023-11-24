@@ -46,4 +46,9 @@ public class UserServiceImpl implements UserService{
         }
         return list;
     }
+
+	@Override
+	public int getUserId(String loginUserId) {
+		return userDao.selectIdByEmail(loginUserId);
+	}
 }
