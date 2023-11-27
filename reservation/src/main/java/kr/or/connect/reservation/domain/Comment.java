@@ -6,12 +6,26 @@ public class Comment {
 	private int id;
 	private int productId;
 	private int reservationInfoId;
-	private double score;
-	private String reservationEmail;
+	private int score;
+	private int userId;
 	private String comment;
-	private String createDate;
-	private String modifyDate;
-	private List<String> reservationUserCommentImages;
+	private List<CommentImage> reservationUserCommentImages;
+	
+	public Comment() {
+		super();
+	}
+
+	public Comment(int id, int productId, int reservationInfoId, int score, int userId, String comment,
+			List<CommentImage> reservationUserCommentImages) {
+		super();
+		this.id = id;
+		this.productId = productId;
+		this.reservationInfoId = reservationInfoId;
+		this.score = score;
+		this.userId = userId;
+		this.comment = comment;
+		this.reservationUserCommentImages = reservationUserCommentImages;
+	}
 	
 	public int getId() {
 		return id;
@@ -37,20 +51,20 @@ public class Comment {
 		this.reservationInfoId = reservationInfoId;
 	}
 	
-	public double getScore() {
+	public int getScore() {
 		return score;
 	}
 	
-	public void setScore(double score) {
+	public void setScore(int score) {
 		this.score = score;
 	}
 	
-	public String getReservationEmail() {
-		return reservationEmail;
+	public int getUserId() {
+		return userId;
 	}
 	
-	public void setReservationEmail(String reservationEmail) {
-		this.reservationEmail = reservationEmail;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	
 	public String getComment() {
@@ -61,35 +75,18 @@ public class Comment {
 		this.comment = comment;
 	}
 	
-	public String getCreateDate() {
-		return createDate;
-	}
-	
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
-	}
-	
-	public String getModifyDate() {
-		return modifyDate;
-	}
-	
-	public void setModifyDate(String modifyDate) {
-		this.modifyDate = modifyDate;
-	}
-	
-	public List<String> getReservationUserCommentImages() {
+	public List<CommentImage> getReservationUserCommentImages() {
 		return reservationUserCommentImages;
 	}
 	
-	public void setReservationUserCommentImages(List<String> reservationUserCommentImages) {
+	public void setReservationUserCommentImages(List<CommentImage> reservationUserCommentImages) {
 		this.reservationUserCommentImages = reservationUserCommentImages;
 	}
 	
 	@Override
 	public String toString() {
 		return "Comment [id=" + id + ", productId=" + productId + ", reservationInfoId=" + reservationInfoId
-				+ ", score=" + score + ", reservationEmail=" + reservationEmail + ", comment=" + comment
-				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", reservationUserCommentImages="
+				+ ", score=" + score + ", userId=" + userId + ", comment=" + comment + ", reservationUserCommentImages="
 				+ reservationUserCommentImages + "]";
 	}
 }

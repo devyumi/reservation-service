@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -110,7 +109,7 @@ public class ApiController {
 		@ApiImplicitParam(name = "score", value = "score", paramType = "query", dataType = "int", required = true),
 		@ApiImplicitParam(name = "comment", value = "comment", paramType = "query", dataType = "string", required = true),
 	})
-	@PostMapping("comment")
+	@PostMapping("comments")
 	public CommentResponseDto RegisterComments(
 			@ApiIgnore @AuthenticationPrincipal CustomUserDetails customUserDetails,
 			@RequestParam(defaultValue = "0") int reservationInfoId,

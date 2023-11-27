@@ -1,6 +1,7 @@
 package kr.or.connect.reservation.dao;
 
 import static kr.or.connect.reservation.dao.CommentDaoSqls.*;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.connect.reservation.domain.Comment;
 import kr.or.connect.reservation.domain.CommentDB;
+import kr.or.connect.reservation.domain.CommentImage;
 import kr.or.connect.reservation.domain.CommentImageDB;
 
 @Repository
@@ -26,6 +28,7 @@ public class CommentDao {
 	private SimpleJdbcInsert insertActionComment;
 	private SimpleJdbcInsert insertActionCommentImage;
 	private RowMapper<Comment> commentMapper = BeanPropertyRowMapper.newInstance(Comment.class);
+	private RowMapper<CommentImage> commentImageMapper = BeanPropertyRowMapper.newInstance(CommentImage.class);
 	
 	public CommentDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -59,5 +62,10 @@ public class CommentDao {
 	public int insertCommentImage(CommentImageDB commentImageDB) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(commentImageDB);
 		return insertActionCommentImage.executeAndReturnKey(params).intValue();
+	}
+	
+	public List<CommentImage> selectCommentImages(int reservationUserCommentId){
+		Map<String, Integer> params = Collections.singletonMap("reservation_user_comment_id", reservationUserCommentId);
+		return jdbc.query(SELECT_COMMENT_IMAGE, params, commentImageMapper);
 	}
 }

@@ -21,6 +21,7 @@ import kr.or.connect.reservation.dao.ReservationDao;
 import kr.or.connect.reservation.domain.Category;
 import kr.or.connect.reservation.domain.Comment;
 import kr.or.connect.reservation.domain.CommentDB;
+import kr.or.connect.reservation.domain.CommentImage;
 import kr.or.connect.reservation.domain.CommentImageDB;
 import kr.or.connect.reservation.domain.DisplayInfos;
 import kr.or.connect.reservation.domain.FileInfoDB;
@@ -95,6 +96,11 @@ public class ReservationServiceImpl implements ReservationService{
 	public CommentDto findComments(int productId, int start) {
 		List<Comment> comments = commentDao.selectComments(productId, start, ReservationService.COMMENT_LIMIT);
 		int commentCount = commentDao.selectCommentCount(productId);
+		
+		for(Comment comment : comments) {
+			List<CommentImage> commentImages = commentDao.selectCommentImages(comment.getId());
+			comment.setReservationUserCommentImages(commentImages);
+		}
 		return new CommentDto(commentCount, comments.size(), comments);
 	}
 	
