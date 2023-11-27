@@ -1,10 +1,16 @@
 package kr.or.connect.reservation.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import kr.or.connect.reservation.domain.CommentDB;
+import kr.or.connect.reservation.domain.CommentImageDB;
+import kr.or.connect.reservation.domain.FileInfoDB;
 import kr.or.connect.reservation.domain.ReservationInfoDB;
 import kr.or.connect.reservation.domain.ReservationInfoPriceDB;
 import kr.or.connect.reservation.domain.ReservationPriceRequest;
 import kr.or.connect.reservation.dto.CategoryDto;
 import kr.or.connect.reservation.dto.CommentDto;
+import kr.or.connect.reservation.dto.CommentResponseDto;
 import kr.or.connect.reservation.dto.DisplayInfosDto;
 import kr.or.connect.reservation.dto.OrderInfosDto;
 import kr.or.connect.reservation.dto.DisplayInfoDto;
@@ -25,4 +31,11 @@ public interface ReservationService {
 	ReservationInfoPriceDB addReservationInfoPriceDB(int reservationInfoId, ReservationPriceRequest reservationPriceRequest);
 	OrderInfosDto findOrderInfos(int userId);
 	int updateReservation(int reservationId, int userId);
+	int findProductId(int reservationInfoId);
+	CommentResponseDto RegisterComment(
+			int productId, int reservationInfoId, int userId, int score, String comment, MultipartFile multipartFile);
+	CommentDB addCommentDB(int productId, int reservationInfoId, int userId, int score, String comment);
+	FileInfoDB addFileInfoDB(MultipartFile multipartFile);
+	CommentImageDB addCommentImageDB(int reservationInfoId, int reservationUserCommentId, int fileId);
+	void upload(MultipartFile file);
 }

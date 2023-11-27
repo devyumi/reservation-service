@@ -37,4 +37,8 @@ public class ProductDaoSqls {
 			+ "ON product.id = display_info.product_id "
 			+ "WHERE display_info.id = :display_info_id "
 			+ "ORDER BY id DESC";
+	
+	public static final String SELECT_PRODUCT_ID = "SELECT product_id "
+			+ "FROM reservation_info "
+			+ "WHERE reservation_info.id = :reservation_info_id";
 }

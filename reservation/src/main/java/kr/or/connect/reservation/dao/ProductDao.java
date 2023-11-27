@@ -2,6 +2,7 @@ package kr.or.connect.reservation.dao;
 
 import static kr.or.connect.reservation.dao.ProductDaoSqls.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,5 +53,10 @@ public class ProductDao {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("display_info_id", displayInfoId);
 		return jdbc.query(SELECT_PRODUCT_PRICE, params, productPriceMapper);
+	}
+	
+	public int selectProductId(int reservationInfoId) {
+		Map<String, Integer> params = Collections.singletonMap("reservation_info_id", reservationInfoId);
+		return jdbc.queryForObject(SELECT_PRODUCT_ID, params, Integer.class);
 	}
 }

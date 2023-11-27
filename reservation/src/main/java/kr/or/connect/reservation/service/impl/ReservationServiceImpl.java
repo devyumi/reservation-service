@@ -1,5 +1,7 @@
 package kr.or.connect.reservation.service.impl;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,16 +9,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.connect.reservation.dao.CategoryDao;
 import kr.or.connect.reservation.dao.CommentDao;
 import kr.or.connect.reservation.dao.DisplayDao;
+import kr.or.connect.reservation.dao.FileDao;
 import kr.or.connect.reservation.dao.ProductDao;
 import kr.or.connect.reservation.dao.PromotionDao;
 import kr.or.connect.reservation.dao.ReservationDao;
 import kr.or.connect.reservation.domain.Category;
 import kr.or.connect.reservation.domain.Comment;
+import kr.or.connect.reservation.domain.CommentDB;
+import kr.or.connect.reservation.domain.CommentImageDB;
 import kr.or.connect.reservation.domain.DisplayInfos;
+import kr.or.connect.reservation.domain.FileInfoDB;
 import kr.or.connect.reservation.domain.OrderInfos;
 import kr.or.connect.reservation.domain.DisplayInfoImage;
 import kr.or.connect.reservation.domain.ProductImage;
@@ -28,6 +35,7 @@ import kr.or.connect.reservation.domain.ReservationPriceRequest;
 import kr.or.connect.reservation.domain.ReservationPriceResponse;
 import kr.or.connect.reservation.dto.CategoryDto;
 import kr.or.connect.reservation.dto.CommentDto;
+import kr.or.connect.reservation.dto.CommentResponseDto;
 import kr.or.connect.reservation.dto.DisplayInfosDto;
 import kr.or.connect.reservation.dto.OrderInfosDto;
 import kr.or.connect.reservation.dto.DisplayInfoDto;
@@ -51,6 +59,8 @@ public class ReservationServiceImpl implements ReservationService{
 	CommentDao commentDao;
 	@Autowired
 	ReservationDao reservationDao;
+	@Autowired
+	FileDao fileDao;
 	
 	@Override
 	public CategoryDto findCategories() {
@@ -148,5 +158,67 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public int updateReservation(int reservationId, int userId) {
 		return reservationDao.updateCancelFlag(reservationId, userId);
+	}
+	
+	@Override
+	public int findProductId(int reservationInfoId) {
+		return productDao.selectProductId(reservationInfoId);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public CommentResponseDto RegisterComment(int productId, int reservationInfoId, int userId, int score,
+			String comment, MultipartFile multipartFile) {
+		
+		CommentDB commentDb = addCommentDB(productId, reservationInfoId, userId, score, comment);
+		int reservationUserCommentId = commentDao.insertComment(commentDb);
+		
+		FileInfoDB fileInfoDb = addFileInfoDB(multipartFile);
+		int fileId = fileDao.insertFile(fileInfoDb);
+		upload(multipartFile);
+		
+		CommentImageDB commentImageDb = addCommentImageDB(reservationInfoId, reservationUserCommentId, fileId);
+		commentDao.insertCommentImage(commentImageDb);
+		
+		return new CommentResponseDto("success", productId);
+	}
+	
+	@Override
+	@Transactional(readOnly = false)
+	public CommentDB addCommentDB(int productId, int reservationInfoId, int userId, int score,
+			String comment) {
+		return new CommentDB(productId, reservationInfoId, userId, score, comment,
+							LocalDateTime.now(), LocalDateTime.now());
+	}
+	
+	@Override
+	@Transactional(readOnly = false)
+	public FileInfoDB addFileInfoDB(MultipartFile multipartFile) {
+		String saveFileName = "img/" + multipartFile.getOriginalFilename();
+		return new FileInfoDB(multipartFile.getOriginalFilename(), saveFileName, multipartFile.getContentType(),
+				0, LocalDateTime.now(), LocalDateTime.now());	
+	}
+	
+	@Override
+	@Transactional(readOnly = false)
+	public CommentImageDB addCommentImageDB(int reservationInfoId, int reservationUserCommentId, int fileId) {
+		return new CommentImageDB(reservationInfoId, reservationUserCommentId, fileId);
+	}
+	
+	@Override
+	public void upload(MultipartFile file) {
+		try (
+			FileOutputStream fos = new FileOutputStream("c:/tmp/" + file.getOriginalFilename());
+			InputStream is = file.getInputStream();
+			
+		){
+			int readCount = 0;
+			byte[] buffer = new byte[1024];
+			while((readCount = is.read(buffer)) != -1){
+				fos.write(buffer, 0, readCount);
+		}
+		}catch(Exception e) {
+			throw new RuntimeException("file save Error");
+		}
 	}
 }
