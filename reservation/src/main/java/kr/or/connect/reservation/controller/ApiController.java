@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,8 +45,6 @@ public class ApiController {
 	ReservationService reservationService;
 	@Autowired
 	UserService userService;
-	@Autowired
-	ResourceLoader resourceLoader;
 	
 	@ApiOperation(value = "카테고리 목록 구하기")
 	@GetMapping("categories")
