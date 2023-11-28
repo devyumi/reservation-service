@@ -25,6 +25,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ComponentScan(basePackages = {"kr.or.connect.reservation.controller"})
 public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
 	
+	private static final String[] PATH_PATTERNS = {"/resources/**", "swagger-ui.html", "/webjars/**"};
+    private static final String[] RESOURCE_LOCATIONS = {"/resources/", "classpath:/META-INF/resources/", "classpath:/META-INF/resources/webjars/"};
+	
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
@@ -32,12 +35,12 @@ public class WebMvcContextConfig extends WebMvcConfigurerAdapter{
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		registry.addResourceHandler(PATH_PATTERNS).addResourceLocations(RESOURCE_LOCATIONS);
 	}
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addRedirectViewController("/", "/main");
+		 registry.addViewController("/").setViewName("redirect:/swagger-ui.html");
 	}
 
 	@Override
