@@ -213,18 +213,30 @@ public class ReservationServiceImpl implements ReservationService{
 	
 	@Override
 	public void upload(MultipartFile file) {
-		try (
-			FileOutputStream fos = new FileOutputStream("c:/tmp/" + file.getOriginalFilename());
-			InputStream is = file.getInputStream();
-			
-		){
-			int readCount = 0;
+		try (FileOutputStream fos = new FileOutputStream("c:/tmp/img/" + file.getOriginalFilename());
+			 InputStream is = file.getInputStream();
+		){ 	int readCount = 0;
 			byte[] buffer = new byte[1024];
 			while((readCount = is.read(buffer)) != -1){
 				fos.write(buffer, 0, readCount);
-		}
+			}
 		}catch(Exception e) {
-			throw new RuntimeException("file save Error");
+			throw new RuntimeException("file upload Error");
 		}
+	}
+	
+	@Override
+	public String findFileName(int fileId) {
+		return fileDao.selectFileName(fileId);
+	}
+	
+	@Override
+	public String findSaveFileName(int fileId) {
+		return fileDao.selectSaveFileName(fileId);
+	}
+	
+	@Override
+	public String findContentType(int fileId) {
+		return fileDao.selectContentType(fileId);
 	}
 }

@@ -38,4 +38,7 @@ public interface ReservationService {
 	FileInfoDB addFileInfoDB(MultipartFile multipartFile);
 	CommentImageDB addCommentImageDB(int reservationInfoId, int reservationUserCommentId, int fileId);
 	void upload(MultipartFile file);
+	String findFileName(int fileId);
+	String findSaveFileName(int fileId);
+	String findContentType(int fileId);
 }

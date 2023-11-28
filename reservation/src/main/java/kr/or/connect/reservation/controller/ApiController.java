@@ -1,9 +1,15 @@
 package kr.or.connect.reservation.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +46,8 @@ public class ApiController {
 	ReservationService reservationService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	ResourceLoader resourceLoader;
 	
 	@ApiOperation(value = "카테고리 목록 구하기")
 	@GetMapping("categories")
@@ -122,5 +130,35 @@ public class ApiController {
 			throw new RuntimeException("1점부터 5점 사이의 점수를 입력하시오");
 		}
 		return reservationService.RegisterComment(productId, reservationInfoId, userId, score, comment, multipartFile);
+	}
+	
+	@ApiOperation(value = "이미지 다운로드하기")
+	@GetMapping("files/{fileId}")
+	public void downloadImage(@PathVariable(name = "fileId") int fileId,
+							HttpServletResponse response) {
+		
+		String fileName = reservationService.findFileName(fileId);
+		String saveFileName = "c:/tmp/" + reservationService.findSaveFileName(fileId);
+		String contentType = reservationService.findContentType(fileId);
+		File file = new File(saveFileName);
+		long fileLength = file.length();
+		
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");
+        response.setHeader("Content-Transfer-Encoding", "binary");
+        response.setHeader("Content-Type", contentType);
+        response.setHeader("Content-Length", "" + fileLength);
+        response.setHeader("Pragma", "no-cache;");
+        response.setHeader("Expires", "-1;");
+        
+        try(FileInputStream fis = new FileInputStream(saveFileName);
+            OutputStream out = response.getOutputStream();
+        ){ 	int readCount = 0;
+        	byte[] buffer = new byte[1024];
+            while((readCount = fis.read(buffer)) != -1){
+            	out.write(buffer, 0, readCount);
+            }
+        }catch(Exception ex){
+        	 throw new RuntimeException("file download Error");
+        }
 	}
 }
