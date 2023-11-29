@@ -16,13 +16,13 @@ import kr.or.connect.reservation.service.security.CustomUserDetailsService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
 	@Autowired
 	CustomUserDetailsService customUserDetailsService;
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/webjars/**");
+		web.ignoring().antMatchers(
+				"/api/v2/**", "/v2/api-docs", "/webjars/**", "/swagger/**", "/swagger-resources/**", "swagger-ui.html");
 	}
 
 	@Override
@@ -34,8 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/", "/main", "/users/loginerror", "api/v1/categories", "api/v1/displayinfos/**", "api/v1/promotions", "api/v1/comments").permitAll()
-			.antMatchers("/securepage", "/users/**", "api/v1/reservationinfos").hasRole("USER")
+			.antMatchers("/", "/users/loginerror", "api/v1/categories", "api/v1/displayinfos/**", "api/v1/promotions").permitAll()
+			.antMatchers("/users/**", "api/v1/comments", "api/v1/reservationinfos").hasRole("USER")
 			.anyRequest().authenticated()
 			.and()
 				.formLogin()
